@@ -1,11 +1,12 @@
 const path = require('path')
 const HtmlWeboackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
     entry: {
-        main: './index.js'
+        main: ['@babel/polyfill','./index.js']
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -29,6 +30,31 @@ module.exports = {
                     to: path.resolve(__dirname, 'dist')
                 }
             ]
+        }),
+        new MiniCssExtractPlugin({
+            filename: '[name].bundle.css',
         })
-    ]
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.s[ac]ss$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'sass-loader',
+                ]
+            },
+            {
+                test: /\.m?js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
+            }
+        ]
+    }
 }
