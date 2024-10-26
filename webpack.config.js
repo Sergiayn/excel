@@ -10,6 +10,7 @@ module.exports = (env, argv) => {
     const filename = ext => isProd ? `[name].bundle.${ext}?v=[contenthash]` : `[name].bundle.${ext}`
 
     return {
+        target: 'web',
         context: path.resolve(__dirname, 'src'),
         entry: {
             main: ['@babel/polyfill','./index.js']
@@ -25,6 +26,13 @@ module.exports = (env, argv) => {
                 '@core': path.resolve(__dirname, 'src', 'core'),
             }
         },
+        devServer: {
+            port: 3000,
+            // open: true,
+            // hot: true,
+            watchFiles: './',
+        },
+        devtool: isDev ? 'source-map' : false,
         plugins: [
             new HtmlWeboackPlugin({
                 template: path.resolve(__dirname, 'src/index.html'),
@@ -42,7 +50,6 @@ module.exports = (env, argv) => {
             }),
             new CleanWebpackPlugin()
         ],
-        devtool: isDev ? 'source-map' : false,
         module: {
             rules: [
                 {

@@ -4,7 +4,7 @@
     "description": "```\r npm install\r ```",
     "main": "index.js",
     "scripts": {
-        "start": "webpack --mode=development",
+        "start": "webpack server --mode=development",
         "build": "webpack --mode=production"
     },
     "keywords": [],
@@ -27,6 +27,7 @@
         "sass": "^1.80.4",
         "sass-loader": "^16.0.2",
         "webpack": "^5.95.0",
-        "webpack-cli": "^5.1.4"
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^5.1.0"
     }
 }
