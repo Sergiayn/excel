@@ -1,23 +1,28 @@
-const CODES = {
-  A: 65,
-  Z: 90
-}
+const CODES = {A: 65, Z: 90}
 
-function toCell() {
+function toCell(_, colIndex) {
   return `
-    <div class="cell" contenteditable></div>
+    <div class="cell" contenteditable data-col="${colIndex}"></div>
   `
 }
 
-function toColumn(col) {
+function toColumn(col, colIndex) {
   return `
-  <div class="column">${col}</div>
+<div class="column" data-type="resizable" data-col="${colIndex}">
+    ${col}
+    <div class="col-resize" data-resize="col"></div>
+</div>
   `
 }
 function createRow(index, content) {
+  const resizer = index ?
+    '<div class="row-resize" data-resize="row"></div>' : ''
   return `
-<div class="row">
-  <div class="row-info">${index ? index : ''}</div>
+<div class="row" data-type="resizable">
+  <div class="row-info">
+    ${index ? index : ''}
+    ${resizer}
+  </div>
   <div class="row-data">${content}</div>
 </div>
   `
