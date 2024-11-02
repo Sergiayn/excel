@@ -64,6 +64,17 @@ class Dom {
     })
   }
 
+  id(parse) {
+    if (parse) {
+      const parsed = this.id().split(':')
+      return {
+        row: parseInt(parsed[0], 10),
+        col: parseInt(parsed[1], 10),
+      }
+    }
+    return this.data.id
+  }
+
   addClass(className) {
     this.$el.classList.add(className)
   }
