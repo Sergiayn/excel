@@ -3,14 +3,15 @@ import {$} from '@core/dom'
 import {matrix} from '@core/utils'
 import {createTable} from '@/components/table/table.template'
 import {resizeHandler} from '@/components/table/Table.resize'
-import {isCell, shouldResize} from '@/components/table/table.functions'
+import {isCell, nextSelector, shouldResize}
+  from '@/components/table/table.functions'
 import {TableSelection} from '@/components/table/Table.selection'
 
 export class Table extends ExcelComponent {
   static className = 'excel__table'
   constructor($root) {
     super($root, {
-      listeners: ['mousedown'],
+      listeners: ['mousedown', 'keydown'],
     })
   }
   toHTML() {
@@ -39,6 +40,25 @@ export class Table extends ExcelComponent {
         this.selection.selectGroup($cells)
       } else {
         this.selection.select($target)
+      }
+    }
+  }
+  onKeydown(event) {
+    const keys = [
+      'Enter',
+      'Tab',
+      'ArrowDown',
+      'ArrowUp',
+      'ArrowRight',
+      'ArrowLeft'
+    ]
+    const {key} = event
+    if (!event.shiftKey && keys.includes(key)) {
+      event.preventDefault()
+      const id = this.selection.current.id(true)
+      const $next = this.$root.find(nextSelector(key, id))
+      if (null !== $next.$el) {
+        this.selection.select($next)
       }
     }
   }
