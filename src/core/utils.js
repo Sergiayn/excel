@@ -18,7 +18,7 @@ export function range(start, end) {
 
 export function storage(key, data = null) {
   if (!data) {
-    return JSON.stringify(localStorage.getItem(key))
+    return JSON.parse(localStorage.getItem(key))
   }
   localStorage.setItem(key, JSON.stringify(data))
 }
