@@ -2,18 +2,25 @@ import {Page} from '@core/Page'
 import {createStore} from '@core/createStore'
 import {rootReducer} from '@/redux/rootReducer'
 import {debounce, storage} from '@core/utils'
-import {initialState} from '@/redux/initialState'
+import {normalizeInitialState} from '@/redux/initialState'
 import {Excel} from '@/components/excel/Excel'
 import {Header} from '@/components/header/Header'
 import {Formula} from '@/components/formula/Formula'
 import {Table} from '@/components/table/Table'
 import {Toolbar} from '@/components/toolbar/Toolbar'
 
+function storageName(param) {
+  return 'excel:' + param
+}
+
 export class ExcelPage extends Page {
   getRoot() {
+    const params = this.params ? this.params : Date.now().toString()
+    const state = storage(storageName(params))
+    const initialState = normalizeInitialState(state)
     const store = createStore(rootReducer, initialState)
     const stateListener = debounce((state) => {
-      storage('excel-state', state)
+      storage(storageName(params), state)
     }, 500 )
 
     store.subscribe(stateListener)
