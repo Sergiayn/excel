@@ -17,6 +17,8 @@ jobs:
         run: |
           npm ci
           npm run build
+      - name: test
+        run: npm run test
       - name: Create page not found
         run: cp dist/index.html dist/404.html
       - name: Deploy 🚀
