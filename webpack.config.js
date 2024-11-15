@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWeboackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -26,7 +27,10 @@ module.exports = (env, argv) => {
       new MiniCssExtractPlugin({
         filename: filename('css'),
       }),
-      new CleanWebpackPlugin()
+      new CleanWebpackPlugin(),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(argv.mode)
+      }),
     ]
 
     if (isDev) {

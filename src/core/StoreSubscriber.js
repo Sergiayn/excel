@@ -20,6 +20,9 @@ export class StoreSubscriber {
         }
       })
       this.prevState = this.store.getState()
+      if ('development' === process.env.NODE_ENV) {
+        window['redux'] = this.prevState
+      }
     })
   }
   unsubscribeFromStore() {
