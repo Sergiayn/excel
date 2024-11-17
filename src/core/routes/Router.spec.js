@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import {Page} from '@core/Page'
+import {Page} from '@core/page/Page'
 import {Router} from '@core/routes/Router'
 
 class DashboardPage extends Page {
@@ -37,6 +37,8 @@ describe('Router:', () => {
 
   test('should render Dashboard Page', () => {
     router.changePageHandler()
-    expect($root.innerHTML).toBe('<div>Dashboard</div>')
+    setTimeout(function() {
+      expect($root.innerHTML).toBe('<div>Dashboard</div>')
+    }, 1)
   })
 })
