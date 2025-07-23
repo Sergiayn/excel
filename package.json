@@ -46,5 +46,8 @@
             "^@/(.*)$": "<rootDir>/src/$1",
             "^@core/(.*)$": "<rootDir>/src/core/$1"
         }
+    },
+    "dependencies": {
+        "form-data": "^4.0.4"
     }
 }
